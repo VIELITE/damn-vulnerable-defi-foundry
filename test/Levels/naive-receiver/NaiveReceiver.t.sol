@@ -48,7 +48,9 @@ contract NaiveReceiver is Test {
         /**
          * EXPLOIT START *
          */
-
+        vm.startPrank(attacker);
+        
+        vm.stopPrank()
         /**
          * EXPLOIT END *
          */
