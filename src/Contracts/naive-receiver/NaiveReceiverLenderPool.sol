@@ -13,6 +13,8 @@ contract NaiveReceiverLenderPool is ReentrancyGuard {
 
     uint256 private constant FIXED_FEE = 1 ether; // not the cheapest flash loan
 
+    //@NOTE pay attention to the fixed fee
+
     error BorrowerMustBeADeployedContract();
     error NotEnoughETHInPool();
     error FlashLoanHasNotBeenPaidBack();
